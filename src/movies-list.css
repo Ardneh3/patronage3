@@ -1,0 +1,32 @@
+h3 {
+    margin-bottom: 5px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+#moviesList {
+    width: 80%;
+    margin: 2% 20%;
+}
+
+#moviesList li {
+    margin: 10px auto;
+    padding: 10px
+}
+
+#moviesList li:hover {
+    background-color: #212121;
+    color: #fff;
+}
+
+button {
+    width: 130px;
+    font-size: 1.1rem;
+    border: none;
+    color: #FFF;
+    padding: 15px 32px;
+    text-align: center;
+    margin-top: 5px;
+}

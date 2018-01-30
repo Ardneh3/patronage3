@@ -1,5 +1,6 @@
 import React from 'react';
 import FormErrors from './form-errors';
+import './add-movie-form.css';
 
 export default class AddMovieForm extends React.Component {
 
@@ -7,44 +8,59 @@ export default class AddMovieForm extends React.Component {
         super(props);
         this.state = {validate: false,
         emptyError: '',
-        numberError: ''};
+        numberError: '',
+        existError: ''};
         this._handleClick = this._handleClick.bind(this);
     }
 
     _handleClick (event) {
+        this._formValidator();
         event.preventDefault();
-        this._isEmpty();
-        this._isValidNumber();
-        if (this.state.validate === true) {
-            this.props.afterClick(this.title.value, this.year.value, this.genre.value, this.summary.value);
-            this._resetForm();
-        }
+    }
+
+      _addMovie = () => {
+        this.props.afterClick(this.title.value, this.year.value, this.genre.value, this.summary.value);
+        this._resetForm();
+        this.setState({validate: false, existError: ''});
       }
 
       _isEmpty = () => {
-          if (this.title.value.trim() === '') {
-            this.setState({validate: false, emptyError: 'Title is required'});
-          } else if (this.year.value.trim() === '') {
-            this.setState({validate: false, emptyError: 'Year is required'});
-          } else if (this.genre.value.trim() === '') {
-            this.setState({validate: false, emptyError: 'Genre is required'});
+          const year = this.year.value.trim();
+          const title = this.title.value.trim();
+          const genre = this.genre.value.trim();
+          let currentYear = new Date();
+          if (title === '') {
+            this.setState({emptyError: 'Title is required'});
+          } else if (year === '') {
+            this.setState({emptyError: 'Year is required'});
+          } else if (genre === '') {
+            this.setState({emptyError: 'Genre is required'});
+          } else if (isNaN(year)) {
+            this.setState({validate: false, numberError: 'Input is not a number', emptyError: ''});
+          } else if (year < 1895 || year > currentYear.getFullYear()) {
+            this.setState({validate: false, numberError: 'Invalid year', emptyError: ''});
           } else {
-            this.setState({validate: true, emptyError: ''});
+            this.setState({validate: true, numberError: '', emptyError: ''});
           }
-
-      }
-
-      _isValidNumber = () => {
-        const year = this.year.value.trim();
-        let currentYear = new Date();
-        if (isNaN(year)) {
-            this.setState({validate: false, numberError: 'Input is not a number'});
-        } else if (year < 1895 || year > currentYear.getFullYear()) {
-            this.setState({validate: false, numberError: 'Invalid year'});
-        } else {
-            this.setState({validate: true, numberError: ''});
         }
-      }
+
+        _isExisting = () => {
+            for (let i = 0; i < this.props.movies.length; i++) {
+                if (this.title.value.trim() === this.props.movies[i].title) {
+                    this.setState({validate: false, existError: this.title.value + ' is already in database'});
+                } 
+            }
+        }
+
+        _formValidator = () => {
+            this._isEmpty();
+            if (this.state.validate === true) {
+                this._isExisting();
+                if (this.state.validate === true) {
+                    this._addMovie();
+                }
+            }
+        }
 
       _resetForm = () => { 
         document.getElementById("adding_form").reset();
@@ -52,10 +68,9 @@ export default class AddMovieForm extends React.Component {
 
     render() {
  
-
-        return (
+      return (
         <div id="formContainer">
-        <FormErrors emptyError={this.state.emptyError} numberError={this.state.numberError} />
+        <FormErrors emptyError={this.state.emptyError} numberError={this.state.numberError} existError={this.state.existError} />
         <form id="adding_form">
             <div className="form-row">
                 <label htmlFor="title">Title<span className="asterisk">*</span>:</label>
@@ -77,7 +92,7 @@ export default class AddMovieForm extends React.Component {
                 <p>*required input</p>
             </div>
             <div className="add-btn">
-                <button onClick={this._handleClick}>Submit</button>
+                <button id="btn-form" onClick={this._handleClick}>Submit</button>
             </div>
         </form>
     </div>

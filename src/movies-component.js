@@ -47,7 +47,7 @@ export default class MoviesComponent extends React.Component {
       return (
         <div>
           <MoviesCounters movies={this.state.movies} />
-          <AddMovieForm afterClick={this._addNewMovie} />
+          <AddMovieForm afterClick={this._addNewMovie} movies={this.state.movies} />
           <MoviesList movies={this.state.movies} changeSeenProperty={this._changeSeenProperty} />
         </div>
       );

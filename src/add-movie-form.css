@@ -1,0 +1,67 @@
+#formContainer {
+    margin-top: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+#adding_form {
+    min-width: 25%;
+}
+
+.form-row {
+    display: flex;
+    margin-top: 10px;
+}
+
+.form-row label {
+    flex: 1;
+}
+
+.form-row input, .form-row textarea {
+    flex: 3;
+}
+
+.form-row textarea {
+    height: 80px;
+}
+
+.form-row label:last-of-type {
+    align-self: center;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+    background-color: #FFFFAA;
+}
+
+.asterisk {
+    font-size: 0.8rem;
+    vertical-align: super;
+}
+
+.add-btn {
+    display: flex;
+    justify-content: center;
+}
+
+#btn-form {
+    background-color: gray;
+}
+
+#btn-form:hover {
+    background-color: dimgray;
+}
+
+#form-requirements {
+    font-size: 0.9rem;
+    color: dimgray;
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 1080px) {
+    #formContainer {
+        margin-top: 7%;
+
+    }
+}

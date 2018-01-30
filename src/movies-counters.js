@@ -1,4 +1,5 @@
 import React from 'react';
+import './movies-counters.css';
 
 export default class MoviesCounter extends React.Component {
 
@@ -11,11 +12,11 @@ export default class MoviesCounter extends React.Component {
           }
         }
 
-        return (
-          <div id="moviesCountersContainer">
-          <p>All: <span className="moviesCounter" id="moviesCounterAll">{moviesAll}</span></p>
-          <p>Viewed: <span className="moviesCounter" id="moviesCounterSeen">{moviesSeen}</span></p>
-          </div>
-        )
+      return (
+        <div id="moviesCountersContainer">
+        <p>All: <span className="moviesCounter" id="moviesCounterAll">{moviesAll}</span></p>
+        <p>Viewed: <span className="moviesCounter" id="moviesCounterSeen">{moviesSeen}</span></p>
+        </div>
+      )
     }
 }

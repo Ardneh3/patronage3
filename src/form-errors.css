@@ -1,0 +1,5 @@
+.form-error {
+    position: absolute;
+    color: red;
+    top: 5%;
+}

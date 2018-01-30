@@ -1,0 +1,17 @@
+.Seen {
+    background-color: #4CAF50;
+    margin: 10px 0 15px 0;
+}
+
+.Unseen {
+    background-color: #801515;
+    margin: 10px 0 15px 0;
+}
+
+.Seen:hover {
+    background-color: green;
+}
+
+.Unseen:hover {
+    background-color: red;
+}
