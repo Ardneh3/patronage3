@@ -65,13 +65,30 @@ export default class MoviesComponent extends React.Component {
             "seen": "F"
       }
       ]};
+      this._addNewMovie = this._addNewMovie.bind(this);
     }
+
+    _addNewMovie (title, year, genre, summary) {
+      const moviesList = this.state.movies.slice()
+      const movie = {
+        id: this.state.movies.length+1, 
+        title: title,
+        year: year,
+        genre: genre,
+        summary: summary,
+        seen: 'F'
+      }
+      moviesList.push(movie);
+      this.setState({movies: moviesList})
+      }
+  
+
 
     render() {
       return (
         <div>
           <MoviesCounters movies={this.state.movies} />
-          <AddMovieForm movies={this.state.movies} />
+          <AddMovieForm afterClick={this._addNewMovie} />
           <MoviesList movies={this.state.movies} />
         </div>
       );

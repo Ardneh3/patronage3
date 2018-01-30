@@ -1,50 +1,83 @@
 import React from 'react';
+import FormErrors from './form-errors';
 
 export default class AddMovieForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {movies: this.props.movies};
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {validate: false,
+        emptyError: '',
+        numberError: ''};
+        this._handleClick = this._handleClick.bind(this);
     }
 
-    handleSubmit (event) {
+    _handleClick (event) {
         event.preventDefault();
-        const title = this.refs.title.value;
-        const year = this.refs.year.value;
-        const genre = this.refs.year.value;
-        const summary = this.refs.summary.value;
-        const id = Math.floor((Math.random() * 100) + 1);
-        this.setState({movies: this.state.movies.concat({id, title, year, genre, summary})})
-    }
+        this._isEmpty();
+        this._isValidNumber();
+        if (this.state.validate === true) {
+            this.props.afterClick(this.title.value.trim(), this.year.value.trim(), this.genre.value.trim(), this.summary.value.trim());
+            this._resetForm();
+        }
+      }
+
+      _isEmpty = () => {
+          if (this.title.value.trim() === '') {
+            this.setState({validate: false, emptyError: 'Title is required'});
+          } else if (this.year.value.trim() === '') {
+            this.setState({validate: false, emptyError: 'Year is required'});
+          } else if (this.genre.value.trim() === '') {
+            this.setState({validate: false, emptyError: 'Genre is required'});
+          } else {
+            this.setState({validate: true});
+          }
+
+      }
+
+      _isValidNumber = () => {
+        const year = this.year.value.trim();
+        let currentYear = new Date();
+        if (isNaN(year)) {
+            this.setState({validate: false, numberError: 'Input is not a number'});
+        } else if (year < 1895 || year > currentYear.getFullYear()) {
+            this.setState({validate: false, numberError: 'Invalid year'});
+        } else {
+            this.setState({validate: true});
+        }
+      }
+
+      _resetForm = () => { 
+        document.getElementById("adding_form").reset();
+      }
 
     render() {
  
-      return (
+
+        return (
         <div id="formContainer">
-        <form id="adding_form" onSubmit={this.handleSubmit}>
+        <FormErrors emptyError={this.state.emptyError} numberError={this.state.numberError} />
+        <form id="adding_form">
             <div className="form-row">
                 <label htmlFor="title">Title<span className="asterisk">*</span>:</label>
-                <input type="text" id="title" name="title" ref="title" />
+                <input type="text" id="title" name="title" ref={title => this.title = title} />
             </div>
             <div className="form-row">
                 <label htmlFor="year">Year<span className="asterisk">*</span>:</label>
-                <input type="text" id="year" name="year" ref="year" />
+                <input type="text" id="year" name="year" ref={year => this.year = year} />
             </div>
             <div className="form-row">
                 <label htmlFor="genre">Genre<span className="asterisk">*</span>:</label>
-                <input type="text" id="genre" name="genre" ref="genre" />
+                <input type="text" id="genre" name="genre" ref={genre => this.genre = genre} />
             </div>
             <div className="form-row">
                 <label htmlFor="summary">Summary:</label>
-                <textarea id="summary" name="summary" ref="summary"></textarea>
+                <textarea id="summary" name="summary" ref={summary => this.summary = summary}></textarea>
             </div>
             <div id="form-requirements">
                 <p>*required input</p>
             </div>
             <div className="add-btn">
-                <button type="submit">Submit</button>
+                <button onClick={this._handleClick}>Submit</button>
             </div>
         </form>
     </div>
