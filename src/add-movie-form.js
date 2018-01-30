@@ -16,7 +16,7 @@ export default class AddMovieForm extends React.Component {
         this._isEmpty();
         this._isValidNumber();
         if (this.state.validate === true) {
-            this.props.afterClick(this.title.value.trim(), this.year.value.trim(), this.genre.value.trim(), this.summary.value.trim());
+            this.props.afterClick(this.title.value, this.year.value, this.genre.value, this.summary.value);
             this._resetForm();
         }
       }

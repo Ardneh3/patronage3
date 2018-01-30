@@ -1,6 +1,14 @@
 import React from 'react';
 
 export default class SeenButtons extends React.Component {
+    constructor(props) {
+        super(props);
+        this._handleOnClick = this._handleOnClick.bind(this);
+    }
+
+    _handleOnClick () {
+        this.props.onButtonClick(this.props.id)
+      }
 
     render() {
         let buttonText = null;
@@ -10,6 +18,6 @@ export default class SeenButtons extends React.Component {
             buttonText = 'Unseen';
         }
 
-        return <button>{buttonText}</button>;
+        return <button onClick={this._handleOnClick}>{buttonText}</button>;
     }
 }
