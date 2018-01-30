@@ -1,5 +1,4 @@
 import React from 'react';
-import AddMovieForm from './add-movie-form';
 
 export default class FormErrors extends React.Component {
 

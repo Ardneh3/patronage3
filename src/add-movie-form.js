@@ -29,7 +29,7 @@ export default class AddMovieForm extends React.Component {
           } else if (this.genre.value.trim() === '') {
             this.setState({validate: false, emptyError: 'Genre is required'});
           } else {
-            this.setState({validate: true});
+            this.setState({validate: true, emptyError: ''});
           }
 
       }
@@ -42,7 +42,7 @@ export default class AddMovieForm extends React.Component {
         } else if (year < 1895 || year > currentYear.getFullYear()) {
             this.setState({validate: false, numberError: 'Invalid year'});
         } else {
-            this.setState({validate: true});
+            this.setState({validate: true, numberError: ''});
         }
       }
 
